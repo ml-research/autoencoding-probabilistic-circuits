@@ -2,7 +2,7 @@
 
 Code release for the paper **Tractable Representation Learning with Probabilistic Circuits**. The project implements autoencoding probabilistic circuits (APCs): a tractable PC encoder paired with a neural decoder, differentiable sampling (SIMPLE) for end-to-end training, and evaluation tooling for missing-data robustness, downstream tasks, and knowledge distillation from neural autoencoders.
 
-The repository is organized around the `apc/` package and Hydra configs in `conf/`. The `simple_einet` folder is vendored only for dataloading and PC components and can be ignored for usage.
+The repository is organized around the `apc/` package and Hydra configs in `conf/`.
 
 ## Installation
 - Python >= 3.10 and a recent PyTorch build (CUDA recommended for images).
