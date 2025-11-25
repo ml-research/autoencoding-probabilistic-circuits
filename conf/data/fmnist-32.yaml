@@ -1,0 +1,11 @@
+# @package _global_
+dataset: fmnist-32
+latent_dim: 64
+
+nn_decoder:
+  num_hidden: 64
+  num_res_hidden: 16
+
+conv_pc:
+  channels: 64
+  depth: 4

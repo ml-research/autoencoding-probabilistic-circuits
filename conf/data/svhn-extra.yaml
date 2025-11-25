@@ -1,0 +1,21 @@
+# @package _global_
+dataset: svhn-extra
+latent_dim: 256
+
+
+nn_decoder:
+  num_hidden: 256
+  num_res_hidden: 64
+  num_scales: 4
+
+conv_pc:
+  channels: 64
+  depth: 5
+  latent_channels: 256
+
+downstream_task:
+  train:
+    iters: 10000
+
+  mlp:
+    hidden_dims: [256, 128, 64, 32]

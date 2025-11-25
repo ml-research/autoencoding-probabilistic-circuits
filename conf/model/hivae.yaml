@@ -1,0 +1,8 @@
+# @package _global_
+model_name: "hivae"
+
+train:
+  lr: 0.001
+
+nn_decoder:
+  bn: false

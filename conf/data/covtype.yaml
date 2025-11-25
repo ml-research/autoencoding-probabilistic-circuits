@@ -1,0 +1,5 @@
+# @package _global_
+defaults:
+  - base_1d
+dataset: covtype
+latent_dim: 8

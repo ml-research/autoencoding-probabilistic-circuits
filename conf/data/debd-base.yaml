@@ -1,0 +1,18 @@
+# @package _global_
+
+defaults:
+  - base_1d
+dataset: ???
+latent_dim: 16
+
+train:
+  rec_loss: "bce"
+
+nn_decoder:
+  out_activation: "sigmoid"
+
+einet:
+  dist: "bernoulli"
+  R: 10
+  S: 32
+  I: 32

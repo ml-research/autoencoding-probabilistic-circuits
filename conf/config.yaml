@@ -1,0 +1,202 @@
+defaults:
+  - _self_
+  - data: ???
+  - model: ???
+  - override hydra/job_logging: colorlog
+  - override hydra/hydra_logging: colorlog
+
+# Hydra config
+hydra:
+  run:
+    dir: "${results_dir}/${dataset}/${group}/${subgroup}/${now:%Y-%m-%d_%H-%M-%S}_${oc.select:tag,}"
+  sweep:
+    dir: "${hydra.run.dir}/${hydra.job.name}"
+    subdir: "${hydra.run.dir}/${hydra.job.num}"
+  job_logging:
+    disable_existing_loggers: false
+    root:
+      handlers: []
+  # hydra_logging: False
+  # job_logging: none
+    # handlers:
+    #   file:
+    #     filename: ${hydra.runtime.output_dir}/${hydra.job.name}.log  # Fixed in hydra-colorlog version 1.2.1
+
+einet:
+  S: 8
+  I: 8
+  D: 4
+  R: 8
+  layer: "linsum"
+  structure: "original"  # Can be one of ["original", "bottom_up"]
+  dist: "normal_rat"
+  temperature_leaves: 1.0
+  temperature_sums: 1.0
+  dropout: 0.0
+
+normal_rat:
+  min_std: 0.01
+  max_std: 2.0
+  min_mean: none
+  max_mean: none
+
+latent_dist:
+  type: "normal"
+  normal_rat:
+    min_std: 0.01
+    max_std: 2.0
+    min_mean: none
+    max_mean: none
+  binomial:
+    N: 10
+  categorical:
+    K: 10
+
+
+apc:
+  encoder: "conv_pc"  # Can be one of ["conv_pc", "conv_pc_spnae_act", "conv_pc_spnae_cat", "einet", "einet_act"]
+  decoder: "nn"  # Can be one of ["nn", "pc"]
+  diff_sampling: true  # Should stay true, only here for ablation studies
+  diff_sampling_method: "simple"  # Can be one of ["simple", "gumbel"]
+  train_decode_mpe: false
+
+conv_pc:
+  dist_data: "binomial"
+  dist_latent: "normal"
+  channels: 64
+  depth: 4
+  latent_depth: 0  # At which point of the hierarchy the latents should be "inserted" (e.g. 0 is first sum-prod layer)
+  latent_channels: 32
+  kernel_size: 2  # @Deprecated
+  kernel_size_h: ${conv_pc.kernel_size}
+  kernel_size_w: ${conv_pc.kernel_size}
+  order: "sum-prod"  # Can be one of "sum-prod" and "prod-sum"
+  split: "top-down"  # @Depricated
+  sum_conv: false
+  perm_latents: false
+
+miwae:
+  K_train: 50
+  K_test: 100
+
+hivae:
+  L: 10  # Mixture size
+
+nll_x_and_z: true  # if NLL should be p(X) or p(X, Z)
+
+nn_decoder:
+  num_hidden: 256
+  num_res_hidden: 64
+  num_res_layers: 2
+  num_scales: 2
+  bn: true
+  out_activation: "linear"  # Can be one of ["linear", "sigmoid", "tanh"]
+
+nn_encoder:
+  num_hidden: ${nn_decoder.num_hidden}
+  num_res_hidden: ${nn_decoder.num_res_hidden}
+  num_res_layers: ${nn_decoder.num_res_layers}
+  num_scales: ${nn_decoder.num_scales}
+  bn: ${nn_decoder.bn}
+
+iterative_imputer:
+  estimator: "bayesianridge"  # Can be one of ["bayesianridge", "randomforest"]
+  n_train: 5000
+  skip_complete: True
+  rf:
+    n_jobs: 10
+    n_estimators: 20
+    depth: 3
+  br:
+    max_iter: 100
+
+
+
+weight:
+  rec: 1.0
+  nll: 1.0
+  kld: 1.0
+
+train:
+  iters: 5000
+  lr: 0.1
+  lr_encoder: ${train.lr}
+  lr_decoder: ${train.lr}
+  warmup_p: 2
+  warmup_enabled: true
+  bs: 512
+  optim: "adam"
+  lr_scheduler: "multistep"  # Can be one of "multistep" or "onecycle" or "plateau"
+  amsgrad: False
+  weight_decay: 0.0
+  clip_grad_norm: 0.0
+  early_stopping: False
+  rec_loss: "mse"  # Can be one of "mse" or "bce"
+  missing: False  # Train on missing data
+  missing_min: 0.1
+  missing_max: 0.9
+
+
+downstream_task:
+  model: ["lr"]  # List of models, can be one of "lr" or "mlp"
+  train:
+    iters: 5000
+    lr: 0.05
+    bs: 512
+    optim: "sgd"
+    amsgrad: True
+    weight_decay: 0.01
+    warmup_p: 2
+    warmup_enabled: true
+
+  mlp:
+    hidden_dims: [32, 16]
+
+
+
+test:
+  downstream: True
+  rec: True
+  nll: True
+  tsne: True
+  umap: True
+  tsne_all: False  # False: only evaluates 0% missing data, else evaluates range(0, 100, 10)% missing data
+  p_subset: 100  # Only test on p% of the data
+
+
+umap:
+  n_neighbors: 15
+  min_dist: 0.1
+
+dae_noise_std: 0.0  # Denoising autoencoder noise level
+
+nan_mask_strategy: "value"  # Can be one of ["value", "mean", "layernorm"]
+nan_mask_value: 0.0  # This is the value that will be used to mask NaNs in the input data for NN encoders
+
+# Default set of configurations.
+data_dir: "${oc.env:DATA_DIR}/"
+results_dir: "${oc.env:RESULTS_DIR}/${project_name}"
+project_name: "autoencoding-pcs"
+n_bits: 8
+num_workers: 16
+dry_run: False
+seed: 0
+log_interval: 10
+device: "cuda"
+debug: False
+gpu: 0
+load_and_eval: ""
+precision: "bf16-mixed"
+group: ???
+subgroup: ""
+tag: ???
+wandb: False
+profiler: ???
+num_classes: 10
+num_val: 10
+num_val_images: 10
+
+# These are set in the data config files
+latent_dim: ???
+dataset: ???
+compile: False

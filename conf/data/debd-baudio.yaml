@@ -1,0 +1,7 @@
+# @package _global_
+defaults:
+  - debd-base
+
+dataset: baudio
+latent_dim: 16
+

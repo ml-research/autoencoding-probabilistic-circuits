@@ -1,0 +1,19 @@
+# @package _global_
+model_name: "apc"
+
+apc:
+  encoder: "conv_pc_spnae_cat"
+  decoder: "pc"
+
+
+weight:
+  rec: 0.0
+  nll: 1.0
+  kld: 0.0
+
+nll_x_and_z: false
+
+train:
+  lr: 0.1
+  lr_encoder: 0.1
+  lr_decoder: 0.001

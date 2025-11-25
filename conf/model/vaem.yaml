@@ -1,0 +1,8 @@
+# @package _global_
+model_name: "vaem"
+
+train:
+  lr: 0.001
+
+nn_decoder:
+  bn: false

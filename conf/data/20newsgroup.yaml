@@ -1,0 +1,6 @@
+# @package _global_
+defaults:
+  - base_1d
+dataset: 20newsgroup
+latent_dim: 32
+

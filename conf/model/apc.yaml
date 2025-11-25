@@ -1,0 +1,7 @@
+# @package _global_
+model_name: "apc"
+
+train:
+  lr: 0.1
+  lr_encoder: 0.1
+  lr_decoder: 0.001

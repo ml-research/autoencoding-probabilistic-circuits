@@ -1,0 +1,16 @@
+# @package _global_
+dataset: celeba
+latent_dim: 256
+
+nn_decoder:
+  num_hidden: 256
+  num_res_hidden: 64
+  num_scales: 5
+
+conv_pc:
+  channels: 64
+  depth: 5
+  latent_channels: 256
+
+iterative_imputer:
+  n_train: 500  # Fewer training steps or else fitting takes days

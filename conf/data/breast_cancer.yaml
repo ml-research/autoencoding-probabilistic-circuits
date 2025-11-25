@@ -1,0 +1,6 @@
+# @package _global_
+defaults:
+  - base_1d
+dataset: breast_cancer
+latent_dim: 8
+

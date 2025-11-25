@@ -1,0 +1,14 @@
+# @package _global_
+latent_dim: 8
+
+einet:
+  I: 16
+  S: 16
+  D: 4
+  R: 8
+
+nn_decoder:
+  num_hidden: 8
+
+apc:
+  encoder: "einet"

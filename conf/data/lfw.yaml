@@ -1,0 +1,8 @@
+# @package _global_
+dataset: lfw
+latent_dim: 256
+
+conv_pc:
+  channels: 64
+  depth: 5
+  latent_channels: 256

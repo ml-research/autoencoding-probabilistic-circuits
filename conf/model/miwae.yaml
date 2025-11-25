@@ -1,0 +1,8 @@
+# @package _global_
+model_name: "miwae"
+
+train:
+  lr: 0.0005
+
+nn_decoder:
+  bn: false
