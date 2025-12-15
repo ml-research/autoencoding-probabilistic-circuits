@@ -1,5 +1,7 @@
 # Autoencoding Probabilistic Circuits
 
+<p align="center"><img src="res/figure-2.svg" width="90%"></p>
+
 Code release for the paper **Tractable Representation Learning with Probabilistic Circuits**. The project implements autoencoding probabilistic circuits (APCs): a tractable PC encoder paired with a neural decoder, differentiable sampling (SIMPLE) for end-to-end training, and evaluation tooling for missing-data robustness, downstream tasks, and knowledge distillation from neural autoencoders.
 
 The repository is organized around the `apc/` package and Hydra configs in `conf/`.
