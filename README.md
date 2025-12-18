@@ -34,5 +34,14 @@ python apc/main.py data=mnist-32 model=apc group=test
 If you use this code, please cite:
 
 ``` bibtex
-TODO
+@article{
+    braun2025tractable,
+    title={Tractable Representation Learning with Probabilistic Circuits},
+    author={Steven Braun and Sahil Sidheekh and Antonio Vergari and Martin Mundt and Sriraam Natarajan and Kristian Kersting},
+    journal={Transactions on Machine Learning Research},
+    issn={2835-8856},
+    year={2025},
+    url={https://openreview.net/forum?id=h8D75pVKja},
+    note={J2C Certification}
+}
 ```
